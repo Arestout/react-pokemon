@@ -1,0 +1,135 @@
+$border-radius-size: 14px;
+
+.details-card__button {
+  width: 150px;
+  height: 70px;
+}
+
+.details-card {
+  position: relative;
+  margin: auto;
+  margin-right: 30px;
+  margin-bottom: 60px;
+  border-radius: $border-radius-size + 5;
+  width: 100%;
+  box-shadow: -1px 15px 30px -12px #a8a8ab;
+  background: #fff;
+}
+
+.details-card__content-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: 1000px) {
+    flex-direction: row;
+  }
+}
+
+.details-card__content {
+  padding: 10px;
+  width: 100%;
+
+  &-text {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  @media only screen and (min-width: 600px) {
+    padding: 25px 50px;
+  }
+}
+
+.details-card__image {
+  position: relative;
+  margin-bottom: 35px;
+  border-radius: 50%;
+  border-top-left-radius: $border-radius-size;
+  border-top-right-radius: $border-radius-size;
+  height: 230px;
+  max-width: 300px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    background-color: #efefbb;
+    transform: translateX(-50%) translateY(-45%);
+
+    @media only screen and (min-width: 350px) {
+      width: 210px;
+      height: 210px;
+    }
+  }
+
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    transform: translateX(-50%) translateY(-30%);
+  }
+
+  @media only screen and (min-width: 1000px) {
+    width: 300px;
+  }
+}
+
+.details-card__image-content {
+  margin-bottom: 20px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.details-card__heading {
+  margin-bottom: 30px;
+  line-height: 0.7;
+}
+
+.details-card__subheading {
+  margin-bottom: 20px;
+}
+
+.details-card__level {
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.details-card__unit-name {
+  margin-bottom: 5px;
+  font-weight: 900;
+  font-size: 26px;
+  color: #000;
+}
+
+.details-card__unit-description {
+  display: inline-block;
+
+  span {
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 5px 12px;
+  }
+}
+
+
+
+.details-card__image-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-card__stats {
+  margin-bottom: 30px;
+  width: 100%;
+
+  @media only screen and (min-width: 1000px) {
+    width: 70%;
+  }
+}
+

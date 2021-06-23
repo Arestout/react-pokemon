@@ -1,0 +1,32 @@
+.details-card__characteristics {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    width: 100%;
+    font-weight: 700;
+    text-align: center;
+    color: #2b2727;
+  
+    &-unit {
+      padding: 20px 15px;
+      min-width: 110px;
+    }
+  
+    .characteristic {
+      position: relative;
+      margin-bottom: 10px;
+      font-size: 17px;
+    }
+  
+    .characteristic-value {
+      font-weight: 400;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+  
+    .no-border {
+      border-right: none;
+    }
+  }

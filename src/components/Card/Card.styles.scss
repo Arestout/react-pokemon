@@ -1,0 +1,86 @@
+$border-radius-size: 14px;
+
+.card {
+  position: relative;
+  z-index: 9999;
+  display: inline-block;
+  margin: auto;
+  margin-right: 30px;
+  margin-bottom: 60px;
+  border-radius: $border-radius-size + 5;
+  width: 300px;
+  box-shadow: -1px 15px 30px -12px #a8a8ab;
+  text-align: center;
+  background: #fff;
+}
+
+.card__image {
+  position: relative;
+  margin-bottom: 35px;
+  border-top-left-radius: $border-radius-size;
+  border-top-right-radius: $border-radius-size;
+  height: 230px;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/barbarian-bg.jpg");
+
+  img {
+    position: absolute;
+    left: 30px;
+    top: 12px;
+    width: 240px;
+  }
+}
+
+.card__level {
+  margin-bottom: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.card__unit-name {
+  margin-bottom: 5px;
+  font-weight: 900;
+  font-size: 26px;
+  color: #000;
+}
+
+.card__unit-description {
+  margin-bottom: 10px;
+  padding: 20px;
+
+  span {
+    margin-left: 5px;
+    border-radius: 10px;
+    padding: 5px 12px;
+  }
+}
+
+.card__unit-stats {
+  display: flex;
+  border-bottom-right-radius: $border-radius-size;
+  border-bottom-left-radius: $border-radius-size;
+  font-weight: 700;
+  color: #2b2727;
+
+  .one-third {
+    border-right: 1px solid #000;
+    padding: 20px 15px;
+    width: 33%;
+  }
+
+  .stat {
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+
+  .stat-value {
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .no-border {
+    border-right: none;
+  }
+}
