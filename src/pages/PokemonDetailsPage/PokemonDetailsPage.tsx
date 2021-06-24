@@ -20,6 +20,14 @@ export const PokemonDetailsPage = (): JSX.Element => {
   } = usePokemonDetails(name);
   const description = `Details of ${pokemon ? pokemon.name : ''}`;
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
+
   return (
     <div className="container">
       <Helmet>
@@ -29,8 +37,6 @@ export const PokemonDetailsPage = (): JSX.Element => {
         <meta name="description" content={description} />
       </Helmet>
       <motion.div initial="exit" animate="enter" exit="exit">
-        {isLoading && <Spinner />}
-        {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
         {pokemon && pokemonSpecies && (
           <CardDetails
             pokemon={pokemon}

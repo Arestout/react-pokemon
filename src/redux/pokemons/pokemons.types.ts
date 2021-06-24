@@ -22,6 +22,14 @@ export type Pokemon = {
   types: Type[];
   weight: number;
   capture_rate: number;
+  moves: [
+    {
+      move: {
+        name: string;
+        url: string;
+      };
+    }
+  ];
 };
 
 export type PokemonSpecies = {

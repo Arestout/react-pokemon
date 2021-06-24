@@ -74,7 +74,6 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
                 };
               })
             );
-
             setPokemonEvolutions(evolutionChainResult);
           } catch (error) {
             // eslint-disable-next-line

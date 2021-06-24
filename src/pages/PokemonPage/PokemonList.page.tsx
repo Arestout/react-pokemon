@@ -66,25 +66,33 @@ export const PokemonListPage: React.FC = () => {
     fetchPokemons();
   }, [currentPage, fetchPokemons, pokemonList.length]);
 
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
+
   return (
     <main>
       <Helmet>
         <title>Mega Cool Pokemon App</title>
         <meta name="description" content="List of all pokemons" />
       </Helmet>
+
       <div className="container">
-        {!isLoading && !errorMessage && (
-          <motion.div
-            initial="initial"
-            animate="enter"
-            exit="exit"
-            variants={headingVariants}
-          >
-            <Heading tag="h1" className="pokemon-list__heading">
-              Find out more about your favorite Pokemon
-            </Heading>
-          </motion.div>
-        )}
+        <motion.div
+          initial="initial"
+          animate="enter"
+          exit="exit"
+          variants={headingVariants}
+        >
+          <Heading tag="h1" className="pokemon-list__heading">
+            Find out more about your favorite Pokemon
+          </Heading>
+        </motion.div>
+
         <motion.div
           initial="initial"
           animate="enter"
@@ -92,34 +100,29 @@ export const PokemonListPage: React.FC = () => {
           variants={{ exit: { transition: { staggerChildren: 0.01 } } }}
           className="card-container"
         >
-          {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
-          {isLoading && <Spinner />}
-          {!isLoading &&
-            pokemonList.map((pokemon) => (
-              <motion.div variants={postVariants} key={pokemon.id}>
-                <div className="">
-                  <Link
-                    to={`/pokemon/${pokemon.name}`}
-                    className="card-container__link"
-                  >
-                    <Card pokemon={pokemon} />
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+          {pokemonList.map((pokemon) => (
+            <motion.div variants={postVariants} key={pokemon.id}>
+              <div className="">
+                <Link
+                  to={`/pokemon/${pokemon.name}`}
+                  className="card-container__link"
+                >
+                  <Card pokemon={pokemon} />
+                </Link>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         <div className="pagination-container">
-          {!isLoading && !errorMessage && (
-            <Pagination
-              page={currentPage}
-              count={maxPageCount}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              size="large"
-            />
-          )}
+          <Pagination
+            page={currentPage}
+            count={maxPageCount}
+            onChange={handleChange}
+            variant="outlined"
+            color="secondary"
+            size="large"
+          />
         </div>
       </div>
     </main>
