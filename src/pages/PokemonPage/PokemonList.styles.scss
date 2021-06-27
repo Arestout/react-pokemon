@@ -5,11 +5,9 @@
 
   &__link {
     display: block;
-  }
 
-  &__link:not(:last-child) {
     @media only screen and (min-width: 650px) {
-      margin-right: 20px;
+      margin-right: 30px;
     }
   }
 
@@ -28,6 +26,14 @@
 
 .pagination-container {
   display: flex;
+  justify-content: center;
+}
+
+.pagination-container .MuiPaginationItem-root {
+  margin-bottom: 10px;
+}
+
+.pagination-container .MuiPagination-ul {
   justify-content: center;
 }
 

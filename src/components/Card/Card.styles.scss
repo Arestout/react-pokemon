@@ -5,13 +5,16 @@ $border-radius-size: 14px;
   z-index: 9999;
   display: inline-block;
   margin: auto;
-  margin-right: 30px;
   margin-bottom: 60px;
   border-radius: $border-radius-size + 5;
-  width: 300px;
+  width: 270px;
   box-shadow: -1px 15px 30px -12px #a8a8ab;
   text-align: center;
   background: #fff;
+
+  @media only screen and (min-width: 400px) {
+    width: 300px;
+  }
 }
 
 .card__image {
