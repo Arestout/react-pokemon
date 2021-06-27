@@ -61,23 +61,24 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
             pokemonEvolutions
           );
 
-          try {
-            const evolutionChainResult: PokemonEvolutionsResult = await Promise.all(
-              evolutionChainList.map(async (evolution) => {
-                const result = await api
-                  .get(`${API_URL}/pokemon/${evolution.species_name}/`)
-                  .then((response) => response.data);
+          const evolutionChainResult: PokemonEvolutionsResult | void = await Promise.all(
+            evolutionChainList.map(async (evolution) => {
+              const result = await api
+                .get(`${API_URL}/pokemon/${evolution.species_name}/`)
+                .then((response) => response.data);
 
-                return {
-                  pokemon: result,
-                  min_level: evolution.min_level,
-                };
-              })
-            );
-            setPokemonEvolutions(evolutionChainResult);
-          } catch (error) {
+              return {
+                pokemon: result,
+                min_level: evolution.min_level,
+              };
+            })
+          ).catch((error) => {
             // eslint-disable-next-line
             console.log('Failed to fetch evolutions data: ', error.message);
+          });
+
+          if (evolutionChainResult) {
+            setPokemonEvolutions(evolutionChainResult);
           }
 
           setPokemonSpecies(pokemonSpecies);
@@ -89,7 +90,7 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
       }
     }
     getPokemonDetails();
-  }, [name, pokemonDetails]);
+  }, [name, pokemon, pokemonDetails]);
 
   return {
     isLoading,
