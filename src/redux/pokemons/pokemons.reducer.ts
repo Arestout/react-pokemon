@@ -1,5 +1,6 @@
 import * as types from './pokemons.types';
 
+type ReadonlyObject<T> = { readonly [K in keyof T]: T[K] };
 export interface IPokemonListState {
   isLoading: boolean;
   pokemonList: types.PokemonList;
@@ -7,7 +8,7 @@ export interface IPokemonListState {
   errorMessage: string;
 }
 
-export const initialState: IPokemonListState = {
+export const initialState: ReadonlyObject<IPokemonListState> = {
   isLoading: false,
   pokemonList: [],
   count: 0,
