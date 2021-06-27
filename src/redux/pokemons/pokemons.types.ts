@@ -38,6 +38,9 @@ export type PokemonSpecies = {
   flavor_text_entries: [
     {
       flavor_text: string;
+      language: {
+        name: string;
+      };
     }
   ];
   egg_groups: [

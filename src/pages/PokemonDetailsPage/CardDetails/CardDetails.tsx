@@ -48,7 +48,18 @@ export const CardDetails = ({
   const name = transformName(pokemon.name);
   const type = pokemon.types[0].type.name;
   const types = pokemon.types.map((type) => type.type.name);
-  const description = pokemonSpecies.flavor_text_entries[0].flavor_text;
+  const englishDescription = pokemonSpecies.flavor_text_entries.find(
+    (flavor) => flavor.language.name === 'en'
+  );
+  const description = englishDescription
+    ? englishDescription.flavor_text
+        .replace('\f', '\n')
+        .replace('\u00ad\n', '')
+        .replace('\u00ad', '')
+        .replace(' -\n', ' - ')
+        .replace('-\n', '-')
+        .replace('\n', ' ')
+    : '';
   const id = transformId(pokemon.id);
 
   return (
