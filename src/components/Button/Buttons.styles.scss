@@ -4,9 +4,11 @@
   outline-offset: 4px;
   border: none;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
   background: transparent;
   transition: filter 250ms;
   cursor: pointer;
+  user-select: none;
 
   &:focus:not(:focus-visible) {
     outline: none;
