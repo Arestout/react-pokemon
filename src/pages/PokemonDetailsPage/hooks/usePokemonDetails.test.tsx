@@ -29,15 +29,19 @@ describe('usePokemonDetails', () => {
     apiMock.get.mockClear();
   });
   it('should fetch pokemon data', async () => {
-    apiMock.get.mockResolvedValue({ data: pokemonResponse });
+    apiMock.get
+      .mockResolvedValueOnce({ data: pokemonResponse })
+      .mockResolvedValueOnce({ data: pokemonSpeciesResponse })
+      .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
+      .mockResolvedValueOnce({ data: pokemonEvolutionsResultResponse });
     const { result, waitForNextUpdate } = renderHook(
       () => usePokemonDetails('bulbasaur'),
       { wrapper }
     );
 
-    expect(result.current.pokemon).toEqual(null);
+    expect(result.current.pokemonDetails.pokemon).toEqual(null);
     await waitForNextUpdate();
-    expect(result.current.pokemon).toEqual(pokemonResponse);
+    expect(result.current.pokemonDetails.pokemon).toEqual(pokemonResponse);
   });
 
   it('should fetch pokemon species data', async () => {
@@ -51,9 +55,11 @@ describe('usePokemonDetails', () => {
       { wrapper }
     );
 
-    expect(result.current.pokemonSpecies).toEqual(null);
+    expect(result.current.pokemonDetails.pokemonSpecies).toEqual(null);
     await waitForNextUpdate();
-    expect(result.current.pokemonSpecies).toEqual(pokemonSpeciesResponse);
+    expect(result.current.pokemonDetails.pokemonSpecies).toEqual(
+      pokemonSpeciesResponse
+    );
   });
 
   it('should fetch pokemon evolutions data', async () => {
@@ -67,9 +73,9 @@ describe('usePokemonDetails', () => {
       { wrapper }
     );
 
-    expect(result.current.pokemonEvolutions).toEqual(null);
+    expect(result.current.pokemonDetails.pokemonEvolutions).toEqual(null);
     await waitForNextUpdate();
-    expect(result.current.pokemonEvolutions).toEqual([
+    expect(result.current.pokemonDetails.pokemonEvolutions).toEqual([
       {
         pokemon: pokemonEvolutionsResultResponse.pokemon,
         min_level: pokemonEvolutionsResultResponse.min_level,
@@ -92,21 +98,6 @@ describe('usePokemonDetails', () => {
   it(`should set the errorMessage to ${errorMessage.message} if pokemon species fetching rejects`, async () => {
     apiMock.get
       .mockResolvedValueOnce({ data: pokemonResponse })
-      .mockRejectedValueOnce(errorMessage);
-    const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
-      { wrapper }
-    );
-
-    expect(result.current.errorMessage).toEqual('');
-    await waitForNextUpdate();
-    expect(result.current.errorMessage).toEqual(errorMessage.message);
-  });
-
-  it(`should set the errorMessage to ${errorMessage.message} if pokemon evolutions fetching rejects`, async () => {
-    apiMock.get
-      .mockResolvedValueOnce({ data: pokemonResponse })
-      .mockResolvedValueOnce({ data: pokemonSpeciesResponse })
       .mockRejectedValueOnce(errorMessage);
     const { result, waitForNextUpdate } = renderHook(
       () => usePokemonDetails('bulbasaur'),

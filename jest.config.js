@@ -15,4 +15,5 @@ module.exports = {
     '^config(.*)': '<rootDir>/src/config/$1',
   },
   moduleDirectories: ['node_modules', 'src'],
+  silent: true,
 };

@@ -30,13 +30,8 @@ export const PokemonDetailsPage = (): JSX.Element => {
     ? `/page/${location.state.page}`
     : '/';
 
-  const {
-    pokemon,
-    pokemonSpecies,
-    pokemonEvolutions,
-    isLoading,
-    errorMessage,
-  } = usePokemonDetails(name);
+  const { pokemonDetails, isLoading, errorMessage } = usePokemonDetails(name);
+  const { pokemon, pokemonSpecies, pokemonEvolutions } = pokemonDetails;
   const description = `Details of ${pokemon ? pokemon.name : ''}`;
 
   if (isLoading) {

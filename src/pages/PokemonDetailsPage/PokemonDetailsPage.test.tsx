@@ -14,11 +14,13 @@ describe('PokemonDetailsPage', () => {
   describe('with evolution chain', () => {
     beforeAll(() => {
       const stubbedResponse: hooks.IUsePokemonList = {
-        pokemon: pokemon,
+        pokemonDetails: {
+          pokemon,
+          pokemonSpecies: pokemonSpeciesResponse,
+          pokemonEvolutions: [pokemonEvolutionsResultResponse],
+        },
         isLoading: false,
         errorMessage: '',
-        pokemonSpecies: pokemonSpeciesResponse,
-        pokemonEvolutions: [pokemonEvolutionsResultResponse],
       };
       jest
         .spyOn(hooks, 'usePokemonDetails')
@@ -58,11 +60,13 @@ describe('PokemonDetailsPage', () => {
     const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
     beforeAll(() => {
       const stubbedResponse: hooks.IUsePokemonList = {
-        pokemon: pokemon,
+        pokemonDetails: {
+          pokemon,
+          pokemonSpecies: pokemonSpeciesResponse,
+          pokemonEvolutions: null,
+        },
         isLoading: false,
         errorMessage: '',
-        pokemonSpecies: pokemonSpeciesResponse,
-        pokemonEvolutions: null,
       };
       jest
         .spyOn(hooks, 'usePokemonDetails')

@@ -83,6 +83,9 @@ export const pokemonSpeciesResponse: PokemonSpecies = {
   flavor_text_entries: [
     {
       flavor_text: 'string',
+      language: {
+        name: 'en',
+      },
     },
   ],
   egg_groups: [

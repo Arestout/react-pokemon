@@ -31,13 +31,7 @@ export const App: React.FC = () => {
 };
 
 function ErrorFallback({ error }: FallbackProps) {
-  return (
-    <div className="error-fallback-wrapper">
-      <div className="error-fallback" role="alert">
-        <p>Something went wrong:</p>
-        <p>{error.message}</p>
-        <p>Please refresh the page and try again.</p>
-      </div>
-    </div>
-  );
+  // eslint-disable-next-line
+  console.log('Error: ', error.message);
+  return <ErrorMessage errorMessage="Please refresh the page and try again." />;
 }

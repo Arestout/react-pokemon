@@ -9,80 +9,78 @@ import {
 } from 'reduxApp/pokemons';
 import { RootStateType } from 'reduxApp/rootReducer';
 
-export interface IUsePokemonList {
-  isLoading: boolean;
-  errorMessage: string;
+export type PokemonDetails = {
   pokemon: Pokemon | null;
   pokemonSpecies: PokemonSpecies | null;
   pokemonEvolutions: PokemonEvolutionsResult | null;
+};
+
+export interface IUsePokemonList {
+  isLoading: boolean;
+  errorMessage: string;
+  pokemonDetails: PokemonDetails;
 }
 
 export const usePokemonDetails = (name: string): IUsePokemonList => {
-  const [pokemonDetails, setPokemonDetails] = useState<Pokemon | null>(null);
-  const [pokemonSpecies, setPokemonSpecies] = useState<PokemonSpecies | null>(
-    null
-  );
-  const [
-    pokemonEvolutions,
-    setPokemonEvolutions,
-  ] = useState<PokemonEvolutionsResult | null>(null);
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails>({
+    pokemon: null,
+    pokemonSpecies: null,
+    pokemonEvolutions: null,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const pokemon = useSelector((state: RootStateType) =>
+  const selectedPokemon = useSelector((state: RootStateType) =>
     state.pokemonList.pokemonList.find((pokemon) => pokemon.name === name)
   );
 
   useEffect(() => {
-    if (pokemon) {
-      setPokemonDetails(pokemon);
+    if (!name) {
+      return;
     }
 
     async function getPokemonDetails() {
       try {
         setIsLoading(true);
 
-        if (!pokemonDetails) {
-          const pokemon: Pokemon = await api
+        const pokemon: Pokemon =
+          selectedPokemon ||
+          (await api
             .get(`${API_URL}/pokemon/${name}/`)
-            .then((response) => response.data);
-          setPokemonDetails(pokemon);
-        }
+            .then((response) => response.data));
 
-        if (pokemonDetails) {
-          const pokemonSpecies: PokemonSpecies = await api
-            .get(pokemonDetails.species.url)
-            .then((response) => response.data);
+        const pokemonSpecies: PokemonSpecies = await api
+          .get(pokemon.species.url)
+          .then((response) => response.data);
 
-          const pokemonEvolutions: PokemonEvolutions = await api
-            .get(pokemonSpecies.evolution_chain.url)
-            .then((response) => response.data);
-          const evolutionChainList: PokemonEvolutionsList = getEvolutionChain(
-            pokemonEvolutions
-          );
+        const pokemonEvolutions: PokemonEvolutionsResult | void = await api
+          .get(pokemonSpecies.evolution_chain.url)
+          .then((response) => response.data)
+          .then((result) => getEvolutionChain(result))
+          .then((result) =>
+            Promise.all(
+              result.map(async (evolution) => {
+                const result = await api
+                  .get(`${API_URL}/pokemon/${evolution.species_name}/`)
+                  .then((response) => response.data);
 
-          const evolutionChainResult: PokemonEvolutionsResult | void = await Promise.all(
-            evolutionChainList.map(async (evolution) => {
-              const result = await api
-                .get(`${API_URL}/pokemon/${evolution.species_name}/`)
-                .then((response) => response.data);
-
-              return {
-                pokemon: result,
-                min_level: evolution.min_level,
-              };
-            })
-          ).catch((error) => {
+                return {
+                  pokemon: result,
+                  min_level: evolution.min_level,
+                };
+              })
+            )
+          )
+          .catch((error) => {
             // eslint-disable-next-line
             console.log('Failed to fetch evolutions data: ', error.message);
           });
 
-          if (evolutionChainResult) {
-            setPokemonEvolutions(evolutionChainResult);
-          }
-
-          setPokemonSpecies(pokemonSpecies);
-        }
+        setPokemonDetails({
+          pokemon,
+          pokemonSpecies,
+          pokemonEvolutions: pokemonEvolutions ? pokemonEvolutions : null,
+        });
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -90,14 +88,12 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
       }
     }
     getPokemonDetails();
-  }, [name, pokemon, pokemonDetails]);
+  }, [name, selectedPokemon]);
 
   return {
     isLoading,
     errorMessage,
-    pokemon: pokemonDetails,
-    pokemonSpecies,
-    pokemonEvolutions,
+    pokemonDetails,
   };
 };
 
