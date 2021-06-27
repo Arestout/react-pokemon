@@ -23,13 +23,9 @@ const buttonVariants = {
   },
 };
 
-type LocationState = {
-  page: number;
-};
-
 export const PokemonDetailsPage = (): JSX.Element => {
   const { name } = useParams<{ name: string }>();
-  const location = useLocation<LocationState>();
+  const location = useLocation<{ page: number }>();
   const locationPage = location.state?.page
     ? `/page/${location.state.page}`
     : '/';
@@ -70,7 +66,7 @@ export const PokemonDetailsPage = (): JSX.Element => {
       >
         <Button
           tag="a"
-          to={locationPage !== '/page/1' ? `/page/${location.state.page}` : '/'}
+          to={locationPage === '/page/1' ? '/' : locationPage}
           label="Back to list"
         />
       </motion.div>
