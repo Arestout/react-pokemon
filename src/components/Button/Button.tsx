@@ -1,29 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import './Buttons.styles.scss';
 
 interface IButton {
+  tag: 'button';
   label: string;
-  type?: 'button' | 'submit' | 'reset' | undefined;
-  className: string;
-  disabled?: boolean;
-  tag: string;
-  to?: string;
-  onClick?: (() => void) | ((e: React.FormEvent<HTMLButtonElement>) => void);
+  type: 'button' | 'submit' | 'reset' | undefined;
+  className?: string;
+  disabled: boolean;
+  onClick: (() => void) | ((e: React.FormEvent<HTMLButtonElement>) => void);
 }
 
-export const Button = (props: IButton): JSX.Element => {
-  const { label, className = '', type = 'button', disabled, onClick } = props;
+interface ILink {
+  tag: 'a';
+  to: string;
+  label: string;
+  className?: string;
+}
+
+export const Button = (props: IButton | ILink): JSX.Element => {
+  const { label, className = '' } = props;
+
+  if (props.tag === 'a') {
+    return (
+      <Link to={props.to} className={`btn ${className}`}>
+        <span className="shadow"></span>
+        <span className="btn__edge"></span>
+        <span className="btn__label">{label}</span>
+      </Link>
+    );
+  }
 
   return (
     <button
-      type={type}
+      type={props.type}
       className={`btn ${className}`}
-      disabled={disabled}
-      onClick={onClick}
+      disabled={props.disabled}
+      onClick={props.onClick}
     >
-      {label}
+      <span className="shadow"></span>
+      <span className="btn__edge"></span>
+      <span className="btn__label">{label}</span>
     </button>
   );
 };

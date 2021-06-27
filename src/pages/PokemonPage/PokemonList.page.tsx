@@ -42,7 +42,7 @@ const headingVariants = {
   },
 };
 
-export const PokemonListPage: React.FC = () => {
+export const PokemonListPage = (): JSX.Element => {
   const history = useHistory();
 
   const { page } = useParams<{ page: string }>();
@@ -64,7 +64,7 @@ export const PokemonListPage: React.FC = () => {
 
   useEffect(() => {
     fetchPokemons();
-  }, [currentPage, fetchPokemons, pokemonList.length]);
+  }, [currentPage, fetchPokemons]);
 
   if (isLoading) {
     return <Spinner />;
@@ -104,7 +104,10 @@ export const PokemonListPage: React.FC = () => {
             <motion.div variants={postVariants} key={pokemon.id}>
               <div className="">
                 <Link
-                  to={`/pokemon/${pokemon.name}`}
+                  to={{
+                    pathname: `/pokemon/${pokemon.name}`,
+                    state: { page: currentPage },
+                  }}
                   className="card-container__link"
                 >
                   <Card pokemon={pokemon} />
