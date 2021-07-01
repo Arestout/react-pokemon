@@ -10,6 +10,8 @@ import { ErrorMessage } from 'components/ErrorMessage';
 import { Button } from 'components/Button';
 import { useLocation } from 'react-router-dom';
 
+import './PokemonDetailsPage.styles.scss';
+
 const buttonVariants = {
   enter: {
     opacity: 1,

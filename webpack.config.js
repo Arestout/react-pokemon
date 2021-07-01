@@ -27,7 +27,13 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: './index.js',
+    filename: getFileName('js', '[name]'),
+    chunkFilename: getFileName('js', '[name]'),
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   module: {
     rules: [
@@ -65,7 +71,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: `./css/${getFileName('css')}`,
-      chunkFilename: getFileName('css', '[id]'),
+      chunkFilename: `./css/${getFileName('css')}`,
       ignoreOrder: false,
     }),
     new CleanWebpackPlugin(),

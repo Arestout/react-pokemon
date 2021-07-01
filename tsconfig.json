@@ -10,12 +10,14 @@
       "config/*": ["src/config/*"],
     },
     "target": "es5",
-    "module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
     "allowJs": true,
     "jsx": "react",
     "sourceMap": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "removeComments": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "internals"],

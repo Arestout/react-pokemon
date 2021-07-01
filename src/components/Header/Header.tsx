@@ -12,6 +12,7 @@ export const Header = (): JSX.Element => {
             src="https://cdn2.bulbagarden.net/upload/4/4b/Pok%C3%A9dex_logo.png"
             alt="logo"
             width="100"
+            height="36"
           />
         </Link>
       </div>

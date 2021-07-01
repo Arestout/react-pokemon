@@ -31,6 +31,9 @@ export const Card = ({ pokemon }: ICard): JSX.Element => {
           <img
             src={`${sprites.other['official-artwork'].front_default}`}
             alt={name}
+            width="240"
+            height="240"
+            loading="lazy"
           />
         </div>
         <div className="card__level">#{id}</div>
