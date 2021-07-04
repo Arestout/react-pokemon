@@ -13,7 +13,7 @@ export const Spinner = (): JSX.Element | null => {
 
   if (showSpinner) {
     return (
-      <div className="spinner-overlay">
+      <div className="spinner-overlay" aria-label="loading">
         <div className="spinner-container"></div>
       </div>
     );

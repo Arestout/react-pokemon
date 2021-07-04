@@ -4,11 +4,10 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { AnimatePresence } from 'framer-motion';
 
 import { ErrorMessage } from './components/ErrorMessage/ErrorMessage';
-// import { PokemonListPage } from './pages/PokemonPage/PokemonListPage';
-// import PokemonDetailsPage from 'pages/PokemonDetailsPage';
 import './App.styles.scss';
 import { Header } from 'components/Header/Header';
 import { Spinner } from 'components/Spinner';
+import { PageAnnouncer } from 'components/PageAnnouncer';
 
 const PokemonListPage = lazy(() =>
   import(
@@ -27,8 +26,9 @@ export const App: React.FC = () => {
     <>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <Header />
-        <AnimatePresence exitBeforeEnter>
-          <Suspense fallback={<Spinner />}>
+        <PageAnnouncer />
+        <Suspense fallback={<Spinner />}>
+          <AnimatePresence exitBeforeEnter>
             <Switch location={location} key={location.pathname}>
               <Route exact path="/" component={PokemonListPage} />
               <Route path="/page/:page" component={PokemonListPage} />
@@ -37,8 +37,8 @@ export const App: React.FC = () => {
                 <ErrorMessage errorMessage="404. Page not found" />
               </Route>
             </Switch>
-          </Suspense>
-        </AnimatePresence>
+          </AnimatePresence>
+        </Suspense>
       </ErrorBoundary>
     </>
   );

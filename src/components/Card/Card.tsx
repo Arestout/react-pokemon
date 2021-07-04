@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import cn from 'classnames';
 
 import './Card.styles.scss';
@@ -18,47 +18,45 @@ export const Card = ({ pokemon }: ICard): JSX.Element => {
   const id = pokemon.id.toString().padStart(3, '0');
 
   return (
-    <AnimatePresence exitBeforeEnter>
-      <motion.div
-        whileHover={{
-          scale: 1.02,
-        }}
-        whileTap={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
-        className="card"
-      >
-        <div className="card__image">
-          <img
-            src={`${sprites.other['official-artwork'].front_default}`}
-            alt={name}
-            width="240"
-            height="240"
-            loading="lazy"
-          />
-        </div>
-        <div className="card__level">#{id}</div>
-        <div className="card__unit-name">{name}</div>
-        <div className="card__unit-description">
-          Type: <span className={`background--${type}`}>{type}</span>
+    <motion.div
+      whileHover={{
+        scale: 1.02,
+      }}
+      whileTap={{ scale: 1.02 }}
+      transition={{ duration: 0.2 }}
+      className="card"
+    >
+      <div className="card__image">
+        <img
+          src={`${sprites.other['official-artwork'].front_default}`}
+          alt={name}
+          width="240"
+          height="240"
+          loading="lazy"
+        />
+      </div>
+      <div className="card__level">#{id}</div>
+      <div className="card__unit-name">{name}</div>
+      <div className="card__unit-description">
+        Type: <span className={`background--${type}`}>{type}</span>
+      </div>
+
+      <div className={cn('card__unit-stats', `background--${type}`)}>
+        <div className="one-third">
+          <div className="stat">{experience}</div>
+          <div className="stat-value">Experience</div>
         </div>
 
-        <div className={cn('card__unit-stats', `background--${type}`)}>
-          <div className="one-third">
-            <div className="stat">{experience}</div>
-            <div className="stat-value">Experience</div>
-          </div>
-
-          <div className="one-third">
-            <div className="stat">{weight} kg</div>
-            <div className="stat-value">Weight</div>
-          </div>
-
-          <div className="one-third no-border">
-            <div className="stat">{height} cm</div>
-            <div className="stat-value">Height</div>
-          </div>
+        <div className="one-third">
+          <div className="stat">{weight} kg</div>
+          <div className="stat-value">Weight</div>
         </div>
-      </motion.div>
-    </AnimatePresence>
+
+        <div className="one-third no-border">
+          <div className="stat">{height} cm</div>
+          <div className="stat-value">Height</div>
+        </div>
+      </div>
+    </motion.div>
   );
 };

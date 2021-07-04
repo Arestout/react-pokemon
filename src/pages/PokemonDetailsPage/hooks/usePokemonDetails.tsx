@@ -1,4 +1,5 @@
 import { api, API_URL } from 'api/api';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +22,10 @@ export interface IUsePokemonList {
   pokemonDetails: PokemonDetails;
 }
 
-export const usePokemonDetails = (name: string): IUsePokemonList => {
+export const usePokemonDetails = (
+  name: string,
+  isMountedRef: React.MutableRefObject<boolean>
+): IUsePokemonList => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails>({
     pokemon: null,
     pokemonSpecies: null,
@@ -38,6 +42,8 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
     if (!name) {
       return;
     }
+    const apiRequest = axios.CancelToken.source();
+    const cancelToken = apiRequest.token;
 
     async function getPokemonDetails() {
       try {
@@ -46,22 +52,30 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
         const pokemon: Pokemon =
           selectedPokemon ||
           (await api
-            .get(`${API_URL}/pokemon/${name}/`)
+            .get(`${API_URL}/pokemon/${name}/`, {
+              cancelToken,
+            })
             .then((response) => response.data));
 
         const pokemonSpecies: PokemonSpecies = await api
-          .get(pokemon.species.url)
+          .get(pokemon.species.url, {
+            cancelToken,
+          })
           .then((response) => response.data);
 
         const pokemonEvolutions: PokemonEvolutionsResult | void = await api
-          .get(pokemonSpecies.evolution_chain.url)
+          .get(pokemonSpecies.evolution_chain.url, {
+            cancelToken,
+          })
           .then((response) => response.data)
           .then((result) => getEvolutionChain(result))
           .then((result) =>
             Promise.all(
               result.map(async (evolution) => {
                 const result = await api
-                  .get(`${API_URL}/pokemon/${evolution.species_name}/`)
+                  .get(`${API_URL}/pokemon/${evolution.species_name}/`, {
+                    cancelToken,
+                  })
                   .then((response) => response.data);
 
                 return {
@@ -72,23 +86,34 @@ export const usePokemonDetails = (name: string): IUsePokemonList => {
             )
           )
           .catch((error) => {
+            if (axios.isCancel(error)) {
+              return;
+            }
             // eslint-disable-next-line
             console.log('Failed to fetch evolutions data: ', error.message);
           });
 
-        setPokemonDetails({
-          pokemon,
-          pokemonSpecies,
-          pokemonEvolutions: pokemonEvolutions ? pokemonEvolutions : null,
-        });
+        if (isMountedRef.current) {
+          setPokemonDetails({
+            pokemon,
+            pokemonSpecies,
+            pokemonEvolutions: pokemonEvolutions ? pokemonEvolutions : null,
+          });
+        }
       } catch (error) {
+        if (axios.isCancel(error)) {
+          return;
+        }
         setErrorMessage(error.message);
       } finally {
-        setIsLoading(false);
+        if (isMountedRef.current) {
+          setIsLoading(false);
+        }
       }
     }
     getPokemonDetails();
-  }, [name, selectedPokemon]);
+    return () => apiRequest.cancel();
+  }, [name, selectedPokemon, isMountedRef]);
 
   return {
     isLoading,

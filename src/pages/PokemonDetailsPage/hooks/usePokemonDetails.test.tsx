@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { api } from 'api/api';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
@@ -24,6 +24,7 @@ describe('usePokemonDetails', () => {
   const wrapper = ({ children }: Wrapper) => (
     <Provider store={store}>{children}</Provider>
   );
+  const isMountedRef = { current: true };
 
   beforeEach(() => {
     apiMock.get.mockClear();
@@ -35,7 +36,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
       .mockResolvedValueOnce({ data: pokemonEvolutionsResultResponse });
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -51,7 +52,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
       .mockResolvedValueOnce({ data: pokemonEvolutionsResultResponse });
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -69,7 +70,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
       .mockResolvedValueOnce({ data: pokemonEvolutionsResultResponse.pokemon });
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -86,7 +87,7 @@ describe('usePokemonDetails', () => {
   it(`should set the errorMessage to ${errorMessage.message} if pokemon data fetching rejects`, async () => {
     apiMock.get.mockRejectedValueOnce(errorMessage);
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -100,7 +101,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonResponse })
       .mockRejectedValueOnce(errorMessage);
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -116,7 +117,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
       .mockRejectedValueOnce(errorMessage);
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 
@@ -132,7 +133,7 @@ describe('usePokemonDetails', () => {
       .mockResolvedValueOnce({ data: pokemonEvolutionsResponse })
       .mockResolvedValueOnce({ data: pokemonEvolutionsResultResponse.pokemon });
     const { result, waitForNextUpdate } = renderHook(
-      () => usePokemonDetails('bulbasaur'),
+      () => usePokemonDetails('bulbasaur', isMountedRef),
       { wrapper }
     );
 

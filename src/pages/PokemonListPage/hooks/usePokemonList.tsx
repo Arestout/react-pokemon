@@ -3,13 +3,14 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { fetchPokemonList, PokemonList } from 'reduxApp/pokemons';
 import { RootStateType } from 'reduxApp/rootReducer';
+import { CancelToken } from 'axios';
 
 interface IUsePokemonList {
   isLoading: boolean;
   errorMessage: string;
   pokemonList: PokemonList;
   count: number;
-  fetchPokemons: () => void;
+  fetchPokemons: (cancelToken: CancelToken) => void;
 }
 
 export const usePokemonList = (page = 1): IUsePokemonList => {
@@ -20,9 +21,12 @@ export const usePokemonList = (page = 1): IUsePokemonList => {
     shallowEqual
   );
 
-  const fetchPokemons = useCallback(() => {
-    dispatch(fetchPokemonList(page));
-  }, [dispatch, page]);
+  const fetchPokemons = useCallback(
+    (cancelToken: CancelToken) => {
+      dispatch(fetchPokemonList(page, cancelToken));
+    },
+    [dispatch, page]
+  );
 
   return {
     isLoading,

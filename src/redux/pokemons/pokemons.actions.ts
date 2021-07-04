@@ -1,8 +1,8 @@
 import * as types from './pokemons.types';
 import { ThunkAction } from 'redux-thunk';
+import axios, { CancelToken } from 'axios';
 
 import type { RootStateType } from 'reduxApp/rootReducer';
-
 import { api, API_URL } from 'api/api';
 
 export type ThunkType<ReturnType = Promise<void>> = ThunkAction<
@@ -30,20 +30,28 @@ export const fetchPokemonListFailure = (
   payload: errorMessage,
 });
 
-export const fetchPokemonList = (page = 1): ThunkType => async (dispatch) => {
+export const fetchPokemonList = (
+  page = 1,
+  cancelToken: CancelToken
+): ThunkType => async (dispatch) => {
   try {
     dispatch(fetchPokemonListStart());
     const limit = 20;
     const offset = page === 1 ? 0 : limit * (page - 1);
     const response = await api
       .get<types.PokemonListFetchResult>(
-        `${API_URL}/pokemon?offset=${offset}&limit=${limit}`
+        `${API_URL}/pokemon?offset=${offset}&limit=${limit}`,
+        {
+          cancelToken,
+        }
       )
       .then((result) => result.data);
 
     const promiseArray = response.results.map(async (pokemon) => {
       const result = await api
-        .get<types.Pokemon>(`${pokemon.url}`)
+        .get<types.Pokemon>(`${pokemon.url}`, {
+          cancelToken,
+        })
         .then((result) => result.data);
       return result;
     });
@@ -57,6 +65,9 @@ export const fetchPokemonList = (page = 1): ThunkType => async (dispatch) => {
 
     dispatch(fetchPokemonListSuccess({ count: response.count, pokemonList }));
   } catch (error) {
+    if (axios.isCancel(error)) {
+      return;
+    }
     dispatch(fetchPokemonListFailure(error.message));
   }
 };
