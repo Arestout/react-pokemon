@@ -1,0 +1,22 @@
+.MuiTypography-body2 {
+  font-size: 14px !important;
+}
+
+.MuiTableContainer-root {
+  scrollbar-color: linear-gradient(to left, #f2709c, #ff9472);
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+.MuiTableContainer-root::-webkit-scrollbar {
+  width: 12px;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar-track {
+  background: #d8d8d8;
+}
+
+.MuiTableContainer-root::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: linear-gradient(to left, #f2709c, #ff9472);
+}

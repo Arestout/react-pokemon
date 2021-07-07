@@ -30,7 +30,7 @@ export const PokemonEvolution = ({
   const transformName = (name: string) => name[0].toUpperCase() + name.slice(1);
 
   return (
-    <div className="details-card__evolution">
+    <>
       <Heading tag="h3" className="details-card__subheading">
         Evolution chain
       </Heading>
@@ -49,11 +49,6 @@ export const PokemonEvolution = ({
                 <span>#{transformId(evolution.pokemon.id)}</span>
                 <p>{transformName(evolution.pokemon.name)}</p>
                 <motion.img
-                  // whileHover={{
-                  //   scale: 1.05,
-                  // }}
-                  // whileTap={{ scale: 1.02 }}
-                  // transition={{ duration: 0.2 }}
                   variants={hoverVariants}
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolution.pokemon.id}.png`}
                   alt={evolution.pokemon.name}
@@ -70,6 +65,6 @@ export const PokemonEvolution = ({
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };

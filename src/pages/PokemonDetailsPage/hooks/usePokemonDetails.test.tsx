@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode } from 'react';
 import { api } from 'api/api';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';

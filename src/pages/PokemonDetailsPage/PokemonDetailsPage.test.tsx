@@ -39,19 +39,39 @@ describe('PokemonDetailsPage', () => {
 
     it('should render statistics', async () => {
       await waitFor(() => {
-        expect(screen.getByText('Stats')).toBeInTheDocument();
+        expect(
+          screen.getByRole('heading', { name: 'Stats', level: 3 })
+        ).toBeInTheDocument();
+        expect(screen.getByText('hp')).toBeInTheDocument();
+        expect(screen.getByText('attack')).toBeInTheDocument();
+        expect(screen.getByText('defense')).toBeInTheDocument();
+        expect(screen.getByText('special-attack')).toBeInTheDocument();
+        expect(screen.getByText('special-defense')).toBeInTheDocument();
+        expect(screen.getByText('speed')).toBeInTheDocument();
       });
     });
 
     it('should render evolution chain', async () => {
       await waitFor(() => {
-        expect(screen.getByText('Evolution chain')).toBeInTheDocument();
+        expect(
+          screen.getByRole('heading', { name: 'Evolution chain', level: 3 })
+        ).toBeInTheDocument();
       });
     });
 
     it('should render characteristics', async () => {
       await waitFor(() => {
         expect(screen.getByText('height')).toBeInTheDocument();
+      });
+    });
+
+    it('should render moves', async () => {
+      await waitFor(() => {
+        expect(
+          screen.getByRole('heading', { name: 'Moves', level: 3 })
+        ).toBeInTheDocument();
+        expect(screen.queryAllByRole('row')).toHaveLength(6);
+        expect(screen.queryAllByRole('cell')).toHaveLength(25);
       });
     });
   });
@@ -83,7 +103,7 @@ describe('PokemonDetailsPage', () => {
       cleanup();
     });
 
-    it(`should render  as h2 heading`, async () => {
+    it(`should render as h2 heading`, async () => {
       await waitFor(() => {
         expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
           name

@@ -18,6 +18,7 @@ export type Pokemon = {
   species: {
     url: string;
   };
+  moves: PokemonMovesSource[];
   stats: Stats[];
   types: Type[];
   weight: number;
@@ -41,6 +42,13 @@ export type PokemonSpecies = {
     }
   ];
   evolution_chain: {
+    url: string;
+  };
+};
+
+export type PokemonMovesSource = {
+  move: {
+    name: string;
     url: string;
   };
 };

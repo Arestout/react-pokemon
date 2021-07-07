@@ -41,6 +41,46 @@ export const pokemon = {
         url: 'https://pokeapi.co/api/v2/stat/1/',
       },
     },
+    {
+      base_stat: 87,
+      effort: 0,
+      stat: {
+        name: 'attack',
+        url: 'https://pokeapi.co/api/v2/stat/2/',
+      },
+    },
+    {
+      base_stat: 105,
+      effort: 3,
+      stat: {
+        name: 'defense',
+        url: 'https://pokeapi.co/api/v2/stat/3/',
+      },
+    },
+    {
+      base_stat: 53,
+      effort: 0,
+      stat: {
+        name: 'special-attack',
+        url: 'https://pokeapi.co/api/v2/stat/4/',
+      },
+    },
+    {
+      base_stat: 85,
+      effort: 0,
+      stat: {
+        name: 'special-defense',
+        url: 'https://pokeapi.co/api/v2/stat/5/',
+      },
+    },
+    {
+      base_stat: 67,
+      effort: 0,
+      stat: {
+        name: 'speed',
+        url: 'https://pokeapi.co/api/v2/stat/6/',
+      },
+    },
   ],
   types: [
     {
@@ -48,6 +88,14 @@ export const pokemon = {
       type: {
         name: 'grass',
         url: 'https://pokeapi.co/api/v2/type/12/',
+      },
+    },
+  ],
+  moves: [
+    {
+      move: {
+        name: 'razor-wind',
+        url: 'https://pokeapi.co/api/v2/move/13/',
       },
     },
   ],
@@ -118,4 +166,12 @@ export const pokemonEvolutionsResponse = {
 export const pokemonEvolutionsResultResponse = {
   pokemon,
   min_level: 16,
+};
+
+export const pokemonMovesResponse = {
+  accuracy: 100,
+  power: 80,
+  pp: 10,
+  name: 'razor-wind',
+  type: { name: 'normal' },
 };

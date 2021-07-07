@@ -1,49 +1,47 @@
 .details-card__evolution {
-    margin-bottom: 20px;
-  
-    &-wrapper {
-      display: flex;
-      flex-wrap: wrap;
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &-unit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+
+    span {
+      font-weight: 700;
+      font-size: 11px;
     }
-  
-    &-unit {
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding-right: 10px;
-  
-      span {
-        font-weight: 700;
-        font-size: 11px;
-      }
-  
-      p {
-        margin-bottom: 10px;
-        font-weight: 700;
-        font-size: 14px;
-      }
-  
+
+    p {
+      margin-bottom: 10px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    img {
+      width: 120px;
+    }
+
+    @media screen and (max-width: 996px) {
       img {
-        width: 120px;
-      }
-  
-      @media screen and (max-width: 996px) {
-        img {
-          width: 95px;
-        }
+        width: 95px;
       }
     }
   }
-  
-  .evolution-level__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .evolution-unit__level {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 15px;
-  }
+}
+
+.evolution-level__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.evolution-unit__level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 15px;
+}

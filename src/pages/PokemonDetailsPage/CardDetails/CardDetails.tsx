@@ -10,6 +10,7 @@ import { Heading } from 'components/Heading/Heading';
 import { Progress } from 'components/Progress/Progress';
 import { PokemonEvolution } from './PokemonEvolution';
 import { PokemonCharacteristics } from './PokemonCharacterisitcs';
+import { PokemonMoves } from './PokemonMoves';
 
 import './CardDetails.styles.scss';
 
@@ -96,7 +97,7 @@ export const CardDetails = ({
             {description && <p>{description}</p>}
           </div>
 
-          <div className="details-card__stats">
+          <div className="details-card__section details-card__stats">
             <Heading tag="h3" className="details-card__subheading">
               Stats
             </Heading>
@@ -110,7 +111,18 @@ export const CardDetails = ({
           </div>
 
           {pokemonEvolutions && (
-            <PokemonEvolution pokemonEvolutions={pokemonEvolutions} />
+            <div className="details-card__section details-card__evolution">
+              <PokemonEvolution pokemonEvolutions={pokemonEvolutions} />
+            </div>
+          )}
+
+          {pokemon.moves.length > 0 && (
+            <div className="details-card__section details-card__moves">
+              <Heading tag="h3" className="details-card__subheading">
+                Moves
+              </Heading>
+              <PokemonMoves pokemonMovesSource={pokemon.moves} />
+            </div>
           )}
         </div>
       </div>

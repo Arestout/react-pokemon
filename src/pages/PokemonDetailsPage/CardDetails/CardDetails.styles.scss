@@ -90,7 +90,7 @@ $border-radius-size: 14px;
 }
 
 .details-card__subheading {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .details-card__level {
@@ -123,10 +123,13 @@ $border-radius-size: 14px;
 }
 
 .details-card__stats {
-  margin-bottom: 30px;
   width: 100%;
 
-  @media only screen and (min-width: 1000px) {
-    width: 70%;
+  @media only screen and (min-width: 1300px) {
+    width: 80%;
   }
+}
+
+.details-card__section {
+  margin-bottom: 50px;
 }
